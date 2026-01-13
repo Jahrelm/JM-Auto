@@ -1,6 +1,5 @@
 
-import React, { useState } from 'react';
-
+import React, { useState, useEffect } from 'react';
 
 interface NavbarProps {
   onNavigate: (view: 'home' | 'service' | 'new-cars' | 'used-cars' | 'contact') => void;
@@ -9,6 +8,15 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleNav = (view: 'home' | 'service' | 'new-cars' | 'used-cars' | 'contact') => {
     onNavigate(view);
@@ -16,14 +24,32 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView }) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Determine if we should use the transparent style
+  // We'll use transparent style at the top of Home, New Cars, and Used Cars (since they have dark heros/headers)
+  // For Service and Contact, we might want a solid background immediately or assume they have dark headers too.
+  // Let's assume all main pages start with a visually compatible section for now, or default to solid for safe ones.
+  // Actually, let's keep it simple: Transparent at top for ALL, assuming design consistency?
+  // Let's stick to the Scroll behavior.
+
+  const isTransparent = !scrolled;
+
+  // Text color logic
+  // When transparent: White
+  // When scrolled: Slate-900
+  const textColorClass = isTransparent ? 'text-white' : 'text-slate-900';
+  const logoTextClass = isTransparent ? 'text-white' : 'text-slate-900';
+  const navBgClass = isTransparent ? 'bg-transparent py-6' : 'bg-white/95 backdrop-blur-md shadow-sm py-4';
+
   const linkClass = (view: 'home' | 'service' | 'new-cars' | 'used-cars' | 'contact') =>
-    `font-bold uppercase tracking-widest text-xs transition-colors cursor-pointer ${currentView === view ? 'text-red-600' : 'text-slate-900 hover:text-red-600'
+    `font-bold uppercase tracking-widest text-xs transition-colors cursor-pointer ${currentView === view
+      ? 'text-red-600'
+      : `${isTransparent ? 'text-white/90 hover:text-white' : 'text-slate-900 hover:text-red-600'}`
     }`;
 
   return (
-    <nav className="bg-white sticky top-0 z-50 shadow-sm">
+    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${navBgClass}`}>
       <div className="max-w-7xl mx-auto px-4 md:px-8">
-        <div className="flex justify-between h-16 md:h-20 items-center">
+        <div className="flex justify-between items-center">
           {/* Logo Section */}
           <div
             onClick={() => handleNav('home')}
@@ -33,7 +59,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView }) => {
               <span className="text-white font-oswald font-bold text-2xl italic">JM</span>
             </div>
             <div className="flex flex-col leading-none">
-              <span className="text-xl md:text-2xl font-oswald font-bold tracking-tighter text-slate-900 uppercase">JM AUTO</span>
+              <span className={`text-xl md:text-2xl font-oswald font-bold tracking-tighter uppercase transition-colors ${logoTextClass}`}>JM AUTO</span>
             </div>
           </div>
 
@@ -50,7 +76,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView }) => {
           <div className="lg:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-slate-900 p-2 hover:bg-slate-50 rounded-lg transition-colors"
+              className={`${isTransparent ? 'text-white hover:bg-white/10' : 'text-slate-900 hover:bg-slate-50'} p-2 rounded-lg transition-colors`}
               aria-label="Toggle Menu"
             >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

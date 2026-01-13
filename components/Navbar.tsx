@@ -27,24 +27,29 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView }) => {
   // Determine if we should use the transparent style
   // We'll use transparent style at the top of Home, New Cars, and Used Cars (since they have dark heros/headers)
   // For Service and Contact, we might want a solid background immediately or assume they have dark headers too.
-  // Let's assume all main pages start with a visually compatible section for now, or default to solid for safe ones.
-  // Actually, let's keep it simple: Transparent at top for ALL, assuming design consistency?
-  // Let's stick to the Scroll behavior.
+  // We compel solid background when the menu is Open to match the white dropdown.
 
-  const isTransparent = !scrolled;
+  const isTransparent = !scrolled && !isOpen;
 
   // Text color logic
   // When transparent: White
-  // When scrolled: Slate-900
+  // When scrolled or open: Slate-900
   const textColorClass = isTransparent ? 'text-white' : 'text-slate-900';
   const logoTextClass = isTransparent ? 'text-white' : 'text-slate-900';
-  const navBgClass = isTransparent ? 'bg-transparent py-6' : 'bg-white/95 backdrop-blur-md shadow-sm py-4';
 
-  const linkClass = (view: 'home' | 'service' | 'new-cars' | 'used-cars' | 'contact') =>
-    `font-bold uppercase tracking-widest text-xs transition-colors cursor-pointer ${currentView === view
-      ? 'text-red-600'
-      : `${isTransparent ? 'text-white/90 hover:text-white' : 'text-slate-900 hover:text-red-600'}`
-    }`;
+  // Navbar Background: Transparent if at top & closed. Solid white if open. Glass if scrolled & closed.
+  const navBgClass = isTransparent
+    ? 'bg-transparent py-6'
+    : (isOpen ? 'bg-white shadow-sm py-4' : 'bg-white/95 backdrop-blur-md shadow-sm py-4');
+
+  const linkClass = (view: 'home' | 'service' | 'new-cars' | 'used-cars' | 'contact') => {
+    const isActive = currentView === view;
+    if (isTransparent) {
+      return `font-bold uppercase tracking-widest text-xs transition-all cursor-pointer py-1 ${isActive ? 'text-white border-b-2 border-red-600' : 'text-white/90 hover:text-white hover:border-b-2 hover:border-white/50 border-b-2 border-transparent'}`;
+    } else {
+      return `font-bold uppercase tracking-widest text-xs transition-all cursor-pointer py-1 ${isActive ? 'text-red-600' : 'text-slate-900 hover:text-red-600'}`;
+    }
+  };
 
   return (
     <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${navBgClass}`}>
@@ -76,7 +81,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView }) => {
           <div className="lg:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className={`${isTransparent ? 'text-white hover:bg-white/10' : 'text-slate-900 hover:bg-slate-50'} p-2 rounded-lg transition-colors`}
+              className={`${isTransparent ? 'text-white hover:bg-white/10' : 'text-slate-900 hover:bg-slate-50'} p-2 rounded-lg transition-colors focus:outline-none`}
               aria-label="Toggle Menu"
             >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

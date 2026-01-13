@@ -13,10 +13,10 @@ const UsedCarsPage: React.FC<UsedCarsPageProps> = ({ onCarSelect }) => {
     const usedCars = MOCK_CARS.filter(car => car.mileage > 1000 || car.year < 2025);
 
     return (
-        <div className="bg-white min-h-screen pt-20">
+        <div className="bg-white min-h-screen">
 
             {/* Compact Header */}
-            <div className="bg-slate-900 py-12 md:py-20 px-4">
+            <div className="bg-slate-900 pt-32 pb-12 md:pt-40 md:pb-20 px-4">
                 <div className="max-w-7xl mx-auto">
                     <h1 className="text-3xl md:text-5xl font-oswald font-bold text-white uppercase mb-2">
                         Certified Pre-Owned

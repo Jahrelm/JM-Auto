@@ -34,10 +34,10 @@ const Hero: React.FC = () => {
           </p>
 
           <div className="grid grid-cols-2 gap-5 md:flex md:flex-row md:gap-4 w-full md:w-fit">
-            <button className="bg-red-600 hover:bg-red-700 active:scale-95 text-white py-3 md:px-10 md:py-5 rounded-lg md:rounded-xl font-bold transition-all shadow-xl md:shadow-2xl shadow-red-600/30 flex items-center justify-center gap-2 uppercase tracking-widest text-[10px] md:text-base">
+            <button className="bg-red-600 hover:bg-red-700 active:scale-95 text-white py-3 md:px-10 md:py-5 rounded-lg md:rounded-xl font-bold transition-all shadow-xl md:shadow-2xl shadow-red-600/20 flex items-center justify-center gap-2 uppercase tracking-widest text-[10px] md:text-base border-2 border-transparent">
               Browse Inventory
             </button>
-            <button className="bg-white/5 hover:bg-white/10 active:scale-95 backdrop-blur-md text-white border-2 border-white/20 py-3 md:px-10 md:py-5 rounded-lg md:rounded-xl font-bold transition-all flex items-center justify-center uppercase tracking-widest text-[10px] md:text-base">
+            <button className="bg-transparent hover:bg-white/10 active:scale-95 backdrop-blur-md text-white border-2 border-white py-3 md:px-10 md:py-5 rounded-lg md:rounded-xl font-bold transition-all flex items-center justify-center uppercase tracking-widest text-[10px] md:text-base">
               Test Drive
             </button>
           </div>

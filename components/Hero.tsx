@@ -19,7 +19,7 @@ const Hero: React.FC = () => {
 
           </div>
 
-          <h1 className="text-4xl md:text-8xl lg:text-9xl font-oswald font-bold leading-[0.9] mb-4 md:mb-8 uppercase tracking-tighter animate-fadeInUp">
+          <h1 className="text-4xl md:text-8xl lg:text-8xl font-oswald font-bold leading-[0.9] mb-4 md:mb-8 uppercase tracking-tighter animate-fadeInUp">
             Drive <span className="text-transparent bg-clip-text bg-gradient-to-br from-white via-white to-slate-400">Legendary</span>
           </h1>
 

@@ -39,8 +39,8 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentView }) => {
 
   // Navbar Background: Transparent if at top & closed. Solid white if open. Glass if scrolled & closed.
   const navBgClass = isTransparent
-    ? 'bg-transparent py-6'
-    : (isOpen ? 'bg-white shadow-sm py-4' : 'bg-white/95 backdrop-blur-md shadow-sm py-4');
+    ? 'bg-transparent py-5'
+    : (isOpen ? 'bg-white shadow-sm py-5' : 'bg-white/95 backdrop-blur-md shadow-sm py-5');
 
   const linkClass = (view: 'home' | 'service' | 'new-cars' | 'used-cars' | 'contact') => {
     const isActive = currentView === view;
